@@ -3,8 +3,8 @@
 <html>
 <head>
 	<title>Home</title>
-	 <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-	 <link href="static/bootstrap/css/bootstrap.css" rel="stylesheet">
+	 <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	 <link href="../static/bootstrap/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
 
@@ -12,28 +12,25 @@
 
 	<div class="container">
 	
-		
 		<div class="panel panel-primary">
-			<div class="panel-heading">Tasks <a title="Alterar" href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
+			<div class="panel-heading">Tasks</div>
 			<div class="panel-body">
-			    <p>List</p>
+			    <p>${task.title}</p>
 			</div>
 			<!-- Table -->
 			<table class="table">
-				<c:forEach var="t" items="${tasks}">
+				<c:forEach var="i" items="${task.items}">
 				    <tr>			    	
-				    	<td><a href="items/?id=${t.id}&title=${t.title}">${t.title}</a></td>
+				    	<td>${i.description}</td>
 				    	<td><a title="Alterar" href="#"><span class="glyphicon glyphicon-pencil"></span></a></td>
 				    	<td><a title="Excluir" href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
 				    </tr>
 				</c:forEach>			    
 			</table>			
 		</div>
-		
-		
-	</div>
-	
-	
+
+			
+	</div>	
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://code.jquery.com/jquery.js"></script>
