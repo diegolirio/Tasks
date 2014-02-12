@@ -8,10 +8,12 @@ public class Task {
 	private int id;
 	private String title;
 	private boolean completed;
-	private List<TaskItems> items;
+	private List<TaskItem> items;
+	private Usuario usuario;
 	
 	public Task() {
 		this.items = new ArrayList<>();
+		this.usuario = new Usuario();
 	}
 	
 	public int getId() {
@@ -32,13 +34,24 @@ public class Task {
 	public void setCompleted(boolean completed) {
 		this.completed = completed;
 	}
-	public List<TaskItems> getItems() {
+	public List<TaskItem> getItems() {
 		return items;
 	}
-	public void setItems(List<TaskItems> items) {
+	public void setItems(List<TaskItem> items) {
 		this.items = items;
 	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 	
+	public String toString() {
+		return "ID: " + id + ", Title: " + title + ", Completed: " + completed + ", Usuario: " + usuario;
+	}
 	
 
 }

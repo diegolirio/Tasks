@@ -1,6 +1,6 @@
 package com.diegolirio.tasks.model;
 
-public class TaskItems {
+public class TaskItem {
 	
 	private int id;
 	private String description;
