@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.diegolirio.tasks.dao.TaskDao;
+import com.diegolirio.tasks.dao.TaskItemDao;
 import com.diegolirio.tasks.model.Task;
 import com.diegolirio.tasks.model.TaskItem;
 import com.diegolirio.tasks.model.Usuario;
@@ -40,9 +41,10 @@ public class TaskController {
 		ModelAndView mv = new ModelAndView("items");
 		List<TaskItem> items = null;
 		try {
-			items = new TaskDao().getItems(task);
+			task = new TaskDao().getTask(task.getId());
+			items = new TaskDao().getItems(task); 
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		task.setItems(items);
 		mv.addObject("task", task);
@@ -51,21 +53,112 @@ public class TaskController {
 	
 	@RequestMapping(value="task_form", method=RequestMethod.GET)
 	public ModelAndView task_form(Task task) {
-		ModelAndView mv = new ModelAndView("task_form");		
+		ModelAndView mv = new ModelAndView("task_form");
+		if(task != null) {
+			try {
+				task = new TaskDao().getTask(task.getId());
+				mv.addObject("task", task);
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
 		return mv;
 	}
 	
 	@RequestMapping(value="task_form", method=RequestMethod.POST)
-	public ModelAndView task_newupdate(Task task) {
-		ModelAndView mv = new ModelAndView();
-		System.out.println("before insert: " + task);
+	public String task_newupdate(Task task) {
+		//ModelAndView mv = new ModelAndView();
+		String page = "";
 		try {
-			new TaskDao().insertTask(task);
-			mv.setViewName("home");
+			if(task.getId() > 0) {
+				System.out.println("before update: " + task);
+				System.out.println(task);
+				new TaskDao().update(task);
+			}
+			else {
+				System.out.println("before insert: " + task);
+				new TaskDao().insert(task);
+			//	mv.setViewName("home");
+			}
+			page = "redirect:/";
 		} catch (Exception e) {
-			mv.setViewName("task_form");
+			//mv.setViewName("task_form");
+			page = "task_form";
+		}
+		return page;
+	}
+	
+	@RequestMapping(value="task_delete", method=RequestMethod.GET)
+	public ModelAndView delete(Task task) {
+		ModelAndView mv = new ModelAndView("task_delete");
+		task = new TaskDao().getTask(task.getId());
+		mv.addObject("task", task);
+		return mv;
+	}
+	
+	@RequestMapping(value="task_delete", method=RequestMethod.POST)
+	public ModelAndView deleteDB(Task task) {
+		ModelAndView mv = new ModelAndView("task_delete");
+		try {
+			new TaskDao().delete(task);
+			mv.addObject("message", /*"task successfully deleted"*/ "Tarefa excluída com sucesso !!!");
+			mv.addObject("status", "N");
+		} catch (Exception e) {
+			mv.addObject("message", e.getMessage());
+			mv.addObject("status", "E");			
 		}
 		return mv;
 	}
+	
+	@RequestMapping(value="items/cad_item", method=RequestMethod.GET)
+	public ModelAndView itemForm(TaskItem item) {
+		ModelAndView mv = new ModelAndView("add_item");
+		if(item.getId() > 0) 
+			item = new TaskItemDao().getTaskItem(item.getId());
+		else 
+			item.setTask(new TaskDao().getTask(item.getTask().getId()));
+	
+		mv.addObject("item",item);
+		return mv;
+	}
+	
+	@RequestMapping(value="items/cad_item", method=RequestMethod.POST)
+	public String itemFormSave(TaskItem item) {
+		String page = "";
+		try { 
+			System.out.println(item);
+			if (item.getId() == 0)
+				new TaskItemDao().insert(item);
+			else
+				new TaskItemDao().update(item);			
+			page = "redirect:/items/?id="+item.getTask().getId();  
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return page;		
+	}
+	
+	@RequestMapping(value="items/item_delete", method=RequestMethod.GET)
+	public ModelAndView delete(TaskItem item) {
+		ModelAndView mv = new ModelAndView("item_delete");
+		item = new TaskItemDao().getTaskItem(item.getId());
+		mv.addObject("item", item);
+		return mv;
+	}
+	
+	@RequestMapping(value="items/item_delete", method=RequestMethod.POST)
+	public ModelAndView deleteDB(TaskItem item) {
+		ModelAndView mv = new ModelAndView("item_delete");
+		try {
+			new TaskItemDao().delete(item);
+			mv.addObject("message", "Item excluída com sucesso !!!");
+			mv.addObject("status", "N");
+		} catch (Exception e) {
+			mv.addObject("message", e.getMessage());
+			mv.addObject("status", "E");			
+		}
+		return mv;
+	}	
+	
 	
 }

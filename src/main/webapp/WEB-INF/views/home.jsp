@@ -26,8 +26,8 @@
 				<c:forEach var="t" items="${tasks}">
 				    <tr>			    	
 				    	<td><a href="items/?id=${t.id}&title=${t.title}">${t.title}</a></td>
-				    	<td><a title="Alterar" href="#"><span class="glyphicon glyphicon-pencil"></span></a></td>
-				    	<td><a title="Excluir" href="#"><span class="glyphicon glyphicon-remove"></span></a></td>
+				    	<td><a title="Alterar" href="task_form?id=${t.id}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+				    	<td><a title="Excluir" href="task_delete?id=${t.id}" onclick="show_modal(this.href); return false;"><span class="glyphicon glyphicon-remove"></span></a></td>
 				    </tr>
 				</c:forEach>			    
 			</table>			
@@ -42,7 +42,13 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="static/bootstrap/js/bootstrap.min.js"></script>
-
+	<script type="text/javascript">				
+		function show_modal(url) {
+			w = window.open(url, 
+							'', 
+							'height=550, width=750, top=150, left=250, scrollbars=no, resizable=no');								
+		}
+	</script>
 
 
 </body>
