@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page session="false" %>
 <html>
 <head>
@@ -11,23 +12,22 @@
 	<jsp:include page="header.jsp"></jsp:include>
 
 	<div class="container">
-	
-		
+			
 		<div class="panel panel-primary">
-			<div class="panel-heading">Tasks <a title="Alterar" href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
+			<div class="panel-heading"><fmt:message key="task.list"/><a title="Alterar" href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
 			<div class="panel-body">
 				<a href="task_form" class="btn btn-default btn-xs pull-right">
-				  <span class="glyphicon glyphicon-plus"></span> Create New Task
+				  <span class="glyphicon glyphicon-plus"></span> <fmt:message key="task.create.new.task"/>
 				</a>
-			    <p>List</p>
+			    <p><fmt:message key="task.list.subtitle"/></p>
 			</div>
 			<!-- Table -->
 			<table class="table">
 				<c:forEach var="t" items="${tasks}">
 				    <tr>			    	
 				    	<td><a href="items/?id=${t.id}&title=${t.title}">${t.title}</a></td>
-				    	<td><a title="Alterar" href="task_form?id=${t.id}"><span class="glyphicon glyphicon-pencil"></span></a></td>
-				    	<td><a title="Excluir" href="task_delete?id=${t.id}" onclick="show_modal(this.href); return false;"><span class="glyphicon glyphicon-remove"></span></a></td>
+				    	<td><a title='<fmt:message key="task.alter"/>' href="task_form?id=${t.id}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+				    	<td><a title='<fmt:message key="task.delete"/>' href="task_delete?id=${t.id}" onclick="show_modal(this.href); return false;"><span class="glyphicon glyphicon-remove"></span></a></td>
 				    </tr>
 				</c:forEach>			    
 			</table>			

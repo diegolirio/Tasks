@@ -1,8 +1,12 @@
 package com.diegolirio.tasks.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class TaskItem {
 	
 	private int id;
+	@NotNull @Size(min=3, max=50)
 	private String description;
 	private boolean completed;
 	private Task task;

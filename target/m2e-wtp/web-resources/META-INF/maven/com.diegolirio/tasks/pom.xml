@@ -121,7 +121,20 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.28</version>
 		</dependency>
-		            		
+		            
+		<!-- Bean Validation -->		            		
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>4.3.0.Final</version>
+		</dependency>		
+		            			
 			
 		<!-- Test -->
 		<dependency>

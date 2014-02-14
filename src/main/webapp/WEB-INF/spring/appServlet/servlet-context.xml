@@ -7,6 +7,12 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+ 	<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <beans:property name="basename" value="/WEB-INF/resources/messages_pt_BR" /> 
+        <!-- <beans:property name="basename" value="/WEB-INF/resources/messages_en_US" /> -->
+    </beans:bean>
+    
+
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
@@ -24,7 +30,6 @@
 	</beans:bean>
 	
 	<context:component-scan base-package="com.diegolirio.tasks.controller" />
-	
-	
+		
 	
 </beans:beans>

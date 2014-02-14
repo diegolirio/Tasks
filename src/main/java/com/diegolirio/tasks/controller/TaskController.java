@@ -3,10 +3,13 @@ package com.diegolirio.tasks.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -66,8 +69,13 @@ public class TaskController {
 	}
 	
 	@RequestMapping(value="task_form", method=RequestMethod.POST)
-	public String task_newupdate(Task task) {
+	public String task_newupdate(@Valid Task task, BindingResult result) {
 		//ModelAndView mv = new ModelAndView();
+		
+		if(result.hasFieldErrors("title")) {
+			return "task_form";
+		}
+		
 		String page = "";
 		try {
 			if(task.getId() > 0) {
@@ -80,7 +88,7 @@ public class TaskController {
 				new TaskDao().insert(task);
 			//	mv.setViewName("home");
 			}
-			page = "redirect:/";
+			page = "redirect:/?message=Tarefa salva com sucesso&status=N";
 		} catch (Exception e) {
 			//mv.setViewName("task_form");
 			page = "task_form";
@@ -123,7 +131,13 @@ public class TaskController {
 	}
 	
 	@RequestMapping(value="items/cad_item", method=RequestMethod.POST)
-	public String itemFormSave(TaskItem item) {
+	public String itemFormSave(@Valid TaskItem item, BindingResult result) {
+		
+		if(result.hasFieldErrors("description")) {
+			logger.info(result.getFieldError("description").getDefaultMessage());
+			return "add_item";
+		}
+		
 		String page = "";
 		try { 
 			System.out.println(item);

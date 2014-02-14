@@ -3,10 +3,14 @@ package com.diegolirio.tasks.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class Task {
 	
 	private int id;
-	private String title;
+	@NotNull @Size(min=3, message="Titulo deve conter no minimo 3 Caracteres")
+	private String title;	
 	private boolean completed;
 	private List<TaskItem> items;
 	private Usuario usuario;
@@ -53,5 +57,12 @@ public class Task {
 		return "ID: " + id + ", Title: " + title + ", Completed: " + completed + ", Usuario: " + usuario;
 	}
 	
+	public String toJSon() {
+		return null;
+	}
+	
+	public String toXml() {
+		return null;
+	}
 
 }

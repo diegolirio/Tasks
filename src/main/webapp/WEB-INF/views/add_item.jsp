@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,12 +18,12 @@
 	
 		<h3>
 			<c:if test="${item.id == 0}">
-				Add
+				<fmt:message key="task.add.task.to.list"/>
 			</c:if>
 			<c:if test="${item.id > 0}">
-				Alter
+				<fmt:message key="task.alter.list.item"/>
 			</c:if>			
-			 Task list for ${item.task.title}
+			<span class="text-primary">(${item.task.title})</span>
 		</h3>
 	
 		<form action="" class="well form-horizontal" id="id_form_task" method="post" accept-charset="utf-8">
@@ -32,6 +34,7 @@
 			</div>	
 			<div class="form-group">
 				<label for="id_description" class="col col-md-3 control-label">Description</label>
+				<form:errors path="taskItem.description" cssStyle="color:red"/>
 				<div class="col col-md-3">
 					<input name="description" class="form-control" placeholder="Description" maxlength="50" value="${item.description}" type="text" id="id_description"/>
 				</div>
@@ -44,8 +47,8 @@
 			</div>	
 			<div class="form-group">
 				<div class="col col-md-9 col-md-offset-3">
-					<input  class="btn btn-success" type="submit" value="Salvar"/>
-					<a href="/tasks/items/?id=${item.task.id}"  class="btn btn-default">Cancelar</a>
+					<input  class="btn btn-success" type="submit" value='<fmt:message key="task.button.save"/>'/>
+					<a href="/tasks/items/?id=${item.task.id}"  class="btn btn-default"><fmt:message key="task.button.cancel"/></a>
 				</div>
 			</div>
 			
