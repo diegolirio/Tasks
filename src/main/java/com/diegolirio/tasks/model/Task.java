@@ -9,7 +9,8 @@ import javax.validation.constraints.Size;
 public class Task {
 	
 	private int id;
-	@NotNull @Size(min=3, message="Titulo deve conter no minimo 3 Caracteres")
+	//@NotNull @Size(min=3, message="Titulo deve conter no minimo 3 Caracteres")
+	@NotNull @Size(min=3, message="{task.title.must.contain.at.least.x.characters}")
 	private String title;	
 	private boolean completed;
 	private List<TaskItem> items;
