@@ -7,6 +7,10 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+	<interceptors>
+	  <beans:bean class="com.diegolirio.tasks.interceptor.AuthorizerInterceptor" />
+	</interceptors>
+
  	<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <beans:property name="basename" value="/WEB-INF/resources/messages_pt_BR" />  
         <!-- <beans:property name="basename" value="/WEB-INF/resources/messages_en_US" /> -->

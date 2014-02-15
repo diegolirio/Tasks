@@ -14,11 +14,11 @@ public class Task {
 	private String title;	
 	private boolean completed;
 	private List<TaskItem> items;
-	private Usuario usuario;
+	private User usuario;
 	
 	public Task() {
 		this.items = new ArrayList<>();
-		this.usuario = new Usuario();
+		this.usuario = new User();
 	}
 	
 	public int getId() {
@@ -46,11 +46,11 @@ public class Task {
 		this.items = items;
 	}
 
-	public Usuario getUsuario() {
+	public User getUsuario() {
 		return usuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
+	public void setUsuario(User usuario) {
 		this.usuario = usuario;
 	}
 	

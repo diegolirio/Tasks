@@ -53,14 +53,22 @@
               </ul>
             </li>
           </ul>
-
+		  -->
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="http://builtwithbootstrap.com/" target="_blank">Built With Bootstrap</a></li>
-            <li><a href="https://wrapbootstrap.com/?ref=bsw" target="_blank">WrapBootstrap</a></li>
+          
+			    <li class="dropdown">
+				   <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					   ${ user.name }<b class="caret"></b>
+				   </a>
+				   <ul class="dropdown-menu" id="swatch-menu">
+					  <li><a href="/tasks/perfil/">Perfil</a></li>					    
+					  <li><a href="/tasks/logout/">Sair</a></li>					    
+				   </ul>
+				</li>            
+          
           </ul>
 
-        </div>
-        -->
+        <!-- </div>  -->
       </div>
     </div>
 

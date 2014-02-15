@@ -7,9 +7,15 @@ import java.sql.SQLException;
 
 public class Command {
 	
-	public static ResultSet executeQuery(Connection conn, String sql) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		ResultSet rs = stmt.executeQuery();
+	public static ResultSet executeQuery(Connection conn, String sql) {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+		} catch (SQLException e) {
+			throw new RuntimeException("Erro ao executar com.diegolirio.tasks.jdbc.Command.executeQuery:" + e.getMessage());
+		}
 		return rs;
 	}
 	 

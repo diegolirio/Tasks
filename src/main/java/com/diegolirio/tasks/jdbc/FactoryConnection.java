@@ -32,6 +32,7 @@ public class FactoryConnection {
 				
 				//Class.forName("oracle.jdbc.driver.OracleDriver");
 				Class.forName("com.mysql.jdbc.Driver");
+				//com.mysql.jdbc.D
 				conn = DriverManager.getConnection(this.url, 
 												   this.user, 
 												   this.password);

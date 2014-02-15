@@ -18,19 +18,19 @@ import com.diegolirio.tasks.dao.TaskDao;
 import com.diegolirio.tasks.dao.TaskItemDao;
 import com.diegolirio.tasks.model.Task;
 import com.diegolirio.tasks.model.TaskItem;
-import com.diegolirio.tasks.model.Usuario;
+import com.diegolirio.tasks.model.User;
 
 @Controller
 public class TaskController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		ModelAndView mv = new ModelAndView("home");
+		ModelAndView mv = new ModelAndView("list_task");
 		// Usuario
-		Usuario usuario = new Usuario();
+		User usuario = new User();
 		usuario.setId(1);
 		// Pega lista
 		List<Task> tasks = new TaskDao().getList(usuario);
@@ -88,7 +88,7 @@ public class TaskController {
 				new TaskDao().insert(task);
 			//	mv.setViewName("home");
 			}
-			page = "redirect:/?message=Tarefa salva com sucesso&status=N";
+			page = "redirect:/list?message=Tarefa salva com sucesso&status=N";
 		} catch (Exception e) {
 			//mv.setViewName("task_form");
 			page = "task_form";
@@ -109,7 +109,7 @@ public class TaskController {
 		ModelAndView mv = new ModelAndView("task_delete");
 		try {
 			new TaskDao().delete(task);
-			mv.addObject("message", /*"task successfully deleted"*/ "Tarefa excluída com sucesso !!!");
+			mv.addObject("message", /*"task successfully deleted"*/ "Tarefa excluï¿½da com sucesso !!!");
 			mv.addObject("status", "N");
 		} catch (Exception e) {
 			mv.addObject("message", e.getMessage());
@@ -165,7 +165,7 @@ public class TaskController {
 		ModelAndView mv = new ModelAndView("item_delete");
 		try {
 			new TaskItemDao().delete(item);
-			mv.addObject("message", "Item excluída com sucesso !!!");
+			mv.addObject("message", "Item excluï¿½da com sucesso !!!");
 			mv.addObject("status", "N");
 		} catch (Exception e) {
 			mv.addObject("message", e.getMessage());

@@ -10,11 +10,11 @@ import com.diegolirio.tasks.jdbc.Command;
 import com.diegolirio.tasks.jdbc.FactoryConnection;
 import com.diegolirio.tasks.model.Task;
 import com.diegolirio.tasks.model.TaskItem;
-import com.diegolirio.tasks.model.Usuario;
+import com.diegolirio.tasks.model.User;
 
 public class TaskDao {
 	
-	public List<Task> getList(Usuario usuario) {
+	public List<Task> getList(User usuario) {
 		List<Task> list = new ArrayList<>();
 		Connection conn = new FactoryConnection().getConnection();
 		String sql = "Select * from task_task where task_usuario_id = '" + usuario.getId() + "'";
@@ -64,7 +64,7 @@ public class TaskDao {
 			if(rs.next()) {
 				task.setId(rs.getInt("task_task_id"));
 				task.setTitle(rs.getString("task_task_titulo"));
-				Usuario usuario = new Usuario();
+				User usuario = new User();
 				usuario.setId(rs.getInt("task_usuario_id"));
 				task.setUsuario(usuario);
 				task.setCompleted(rs.getBoolean("task_task_concluida"));
