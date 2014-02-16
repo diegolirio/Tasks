@@ -32,7 +32,7 @@ public class TaskItemDao {
 			if(rs.next()) {
 				item.setId(rs.getInt("task_taskitem_id"));
 				item.setDescription(rs.getString("task_taskitem_descricao"));
-				item.setTask(new TaskDao().getTask(item.getId()));
+				item.setTask(new TaskDao(conn).getTask(item.getId()));
 				item.setCompleted(rs.getBoolean("task_taskitem_concluido"));
 			}
 		} catch (SQLException e) {

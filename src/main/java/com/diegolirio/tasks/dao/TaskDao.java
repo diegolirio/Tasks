@@ -6,17 +6,24 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.diegolirio.tasks.jdbc.Command;
-import com.diegolirio.tasks.jdbc.FactoryConnection;
 import com.diegolirio.tasks.model.Task;
 import com.diegolirio.tasks.model.TaskItem;
 import com.diegolirio.tasks.model.User;
 
 public class TaskDao {
 	
+	private Connection conn;
+	
+	public TaskDao(Connection conn) {
+		this.conn = conn;
+	}
+	
 	public List<Task> getList(User usuario) {
 		List<Task> list = new ArrayList<>();
-		Connection conn = new FactoryConnection().getConnection();
 		String sql = "Select * from task_task where task_usuario_id = '" + usuario.getId() + "'";
 		System.out.println(sql);
 		try {
@@ -36,7 +43,6 @@ public class TaskDao {
 	
 	public List<TaskItem> getItems(Task task) {
 		List<TaskItem> items = new ArrayList<>();
-		Connection conn = new FactoryConnection().getConnection();
 		String sql = "Select * from task_taskitem where task_task_id = '" + task.getId() + "'";
 		ResultSet rs;
 		try {
@@ -57,7 +63,6 @@ public class TaskDao {
 	public Task getTask(int id) {
 		Task task = new Task();
 		String sql = "Select * from task_task t where t.task_task_id = " + id;
-		Connection conn = new FactoryConnection().getConnection();
 		ResultSet rs;
 		try {
 			rs = Command.executeQuery(conn, sql);
@@ -79,7 +84,6 @@ public class TaskDao {
 		String sql = "Insert into task_task (task_task_titulo, task_task_concluida, task_usuario_id) values ('"+
 						task.getTitle()+"',"+task.isCompleted()+", '"+ task.getUsuario().getId()+"')";
 		System.out.println("INSERT: " + sql);
-		Connection conn = new FactoryConnection().getConnection();
 		try {
 			Command.executeUpdate(conn, sql);
 			System.out.println("Task gravado com sucesso!!!" + task);
@@ -91,7 +95,6 @@ public class TaskDao {
 	public void update(Task task) {
 		String sql = "Update task_task t set t.task_task_titulo = '" + task.getTitle() + "', t.task_task_concluida = " + task.isCompleted() + " where t.task_task_id = " + task.getId();
 		System.out.println(sql);
-		Connection conn = new FactoryConnection().getConnection();
 		try {
 			Command.executeUpdate(conn, sql);
 		} catch(Exception e) {
@@ -102,7 +105,6 @@ public class TaskDao {
 	public void delete(Task task) {
 		String sql = "delete from task_task where task_task_id = " + task.getId();
 		System.out.println(sql);
-		Connection conn = new FactoryConnection().getConnection();
 		try {
 			Command.executeUpdate(conn, sql);
 		} catch(Exception e) {
