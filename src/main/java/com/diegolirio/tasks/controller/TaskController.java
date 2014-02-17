@@ -1,6 +1,5 @@
 package com.diegolirio.tasks.controller;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,10 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.diegolirio.tasks.dao.TaskDao;
 import com.diegolirio.tasks.dao.TaskItemDao;
-import com.diegolirio.tasks.jdbc.FactoryConnection;
 import com.diegolirio.tasks.model.Task;
 import com.diegolirio.tasks.model.TaskItem;
 import com.diegolirio.tasks.model.User;
@@ -29,8 +26,9 @@ public class TaskController {
 	private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 	private TaskDao dao;
 	
-	public TaskController() {
-		//this.dao = dao;
+	@Autowired
+	public TaskController(TaskDao dao) {
+		this.dao = dao;
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -41,8 +39,7 @@ public class TaskController {
 		User usuario = new User();
 		usuario.setId(1);
 		// Pega lista
-		Connection conn = new FactoryConnection().getConnection();
-		List<Task> tasks = new TaskDao(conn).getList(usuario);
+		List<Task> tasks = this.dao.getList(usuario);
 		mv.addObject("tasks", tasks);
 		return mv;
 	}
@@ -53,9 +50,8 @@ public class TaskController {
 		ModelAndView mv = new ModelAndView("items");
 		List<TaskItem> items = null;
 		try {
-			Connection conn = new FactoryConnection().getConnection();
-			task = new TaskDao(conn).getTask(task.getId());
-			items = new TaskDao(conn).getItems(task); 
+			task = this.dao.getTask(task.getId());
+			items = this.dao.getItems(task); 
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -69,8 +65,7 @@ public class TaskController {
 		ModelAndView mv = new ModelAndView("task_form");
 		if(task != null) {
 			try {
-				Connection conn = new FactoryConnection().getConnection();
-				task = new TaskDao(conn).getTask(task.getId());
+				task = this.dao.getTask(task.getId());
 				mv.addObject("task", task);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
@@ -90,13 +85,11 @@ public class TaskController {
 			if(task.getId() > 0) {
 				System.out.println("before update: " + task);
 				System.out.println(task);
-				Connection conn = new FactoryConnection().getConnection();
-				new TaskDao(conn).update(task);
+				this.dao.update(task);
 			}
 			else {
 				System.out.println("before insert: " + task);
-				Connection conn = new FactoryConnection().getConnection();
-				new TaskDao(conn).insert(task);
+				this.dao.insert(task);
 			//	mv.setViewName("home");
 			}
 			page = "redirect:/list?message=Tarefa salva com sucesso&status=N";
@@ -110,8 +103,7 @@ public class TaskController {
 	@RequestMapping(value="task_delete", method=RequestMethod.GET)
 	public ModelAndView delete(Task task) {
 		ModelAndView mv = new ModelAndView("task_delete");
-		Connection conn = new FactoryConnection().getConnection();
-		task = new TaskDao(conn).getTask(task.getId());
+		task = this.dao.getTask(task.getId());
 		mv.addObject("task", task);
 		return mv;
 	}
@@ -120,8 +112,7 @@ public class TaskController {
 	public ModelAndView deleteDB(Task task) {
 		ModelAndView mv = new ModelAndView("task_delete");
 		try {
-			Connection conn = new FactoryConnection().getConnection();
-			new TaskDao(conn).delete(task);
+			this.dao.delete(task);
 			mv.addObject("message", /*"task successfully deleted"*/ "Tarefa exclu�da com sucesso !!!");
 			mv.addObject("status", "N");
 		} catch (Exception e) {
@@ -137,10 +128,8 @@ public class TaskController {
 		if(item.getId() > 0) 
 			item = new TaskItemDao().getTaskItem(item.getId());
 		else {
-			Connection conn = new FactoryConnection().getConnection();
-			item.setTask(new TaskDao(conn).getTask(item.getTask().getId()));
-		}
-	
+			item.setTask(this.dao.getTask(item.getTask().getId()));
+		}	
 		mv.addObject("item",item);
 		return mv;
 	}

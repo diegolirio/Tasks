@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,12 +16,18 @@ import com.diegolirio.tasks.model.Task;
 import com.diegolirio.tasks.model.TaskItem;
 import com.diegolirio.tasks.model.User;
 
+@Repository
 public class TaskDao {
 	
 	private Connection conn;
 	
-	public TaskDao(Connection conn) {
-		this.conn = conn;
+	@Autowired
+	public TaskDao(DataSource dataSource) {
+		try {
+			this.conn = dataSource.getConnection();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	public List<Task> getList(User usuario) {

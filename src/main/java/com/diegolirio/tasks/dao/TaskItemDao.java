@@ -4,11 +4,27 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.diegolirio.tasks.jdbc.Command;
 import com.diegolirio.tasks.jdbc.FactoryConnection;
 import com.diegolirio.tasks.model.TaskItem;
 
+@Repository
 public class TaskItemDao {
+	
+	public TaskItemDao() {
+		
+	}
+	
+	@Autowired
+	public TaskItemDao(DataSource dataSource) {
+		// Refatorando....
+		// this.conn = dataSource.getConnection();
+	}
 	
 	public void insert(TaskItem item) {
 		String sql = "Insert into task_taskitem (task_taskitem_descricao, task_taskitem_concluido, task_task_id)" +
@@ -20,7 +36,7 @@ public class TaskItemDao {
 		} catch (SQLException e) {
 			new RuntimeException(e);
 		}
-	}
+	} 
 	
 	public TaskItem getTaskItem(int id) {
 		TaskItem item = new TaskItem();
@@ -32,7 +48,7 @@ public class TaskItemDao {
 			if(rs.next()) {
 				item.setId(rs.getInt("task_taskitem_id"));
 				item.setDescription(rs.getString("task_taskitem_descricao"));
-				item.setTask(new TaskDao(conn).getTask(item.getId()));
+				//item.setTask(new TaskDao(conn).getTask(item.getId()));
 				item.setCompleted(rs.getBoolean("task_taskitem_concluido"));
 			}
 		} catch (SQLException e) {
