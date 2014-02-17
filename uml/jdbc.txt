@@ -3,7 +3,9 @@ Create Table task_usuario
  task_usuario_nome varchar(50) not null, 
  task_usuario_email varchar(100) not null, 
  task_usuario_senha varchar(15) not null,
- task_usuario_datacadastro date null);
+ task_usuario_datacadastro date null, 
+ task_usuario_confirmemail boolean default false,
+ task_usuario_confirmsendcode interger default -1);
  
 Create Table task_task
 (task_task_id integer not null auto_increment primary key, 
@@ -16,3 +18,12 @@ Create Table task_taskitem
  task_taskitem_descricao varchar(50) not null,
  task_taskitem_concluido Boolean default false,
  task_task_id integer not null);
+ 
+ 
+ 
+ -- ALTER TABLE task_usuario ADD task_usuario_confirmemail Boolean default false;
+ -- ALTER TABLE task_usuario ADD task_usuario_confirmsendcode Integer default -1;
+ 
+ 
+ 
+ # Alter table table_x change column column_a column_b [type];

@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.diegolirio.tasks.dao.UserDao;
 import com.diegolirio.tasks.model.User;
@@ -25,7 +26,7 @@ public class UserController {
 	public String login(@Valid User user, BindingResult result, HttpSession session, HttpServletRequest request) {
 		
 		System.out.println(user);
-		
+				
 		if(result.hasFieldErrors("email") || result.hasFieldErrors("password")) {
 			return "login";
 		} 
@@ -47,9 +48,11 @@ public class UserController {
 	}	
 	
 	@RequestMapping("logout")
-	public String logout(HttpSession session) {
+	public ModelAndView logout(HttpSession session) {
+		ModelAndView mv = new ModelAndView("login");
+		mv.addObject("message", "Você saiu do sistema");
 		session.invalidate();
-		return "login";
+		return mv;
 	}
 	
 	@RequestMapping(value="perfil", method=RequestMethod.GET)
