@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page session="false" %>
 <html>
@@ -23,13 +24,16 @@
 			</div>
 			<!-- Table -->
 			<table class="table">
-				<c:forEach var="t" items="${tasks}">
+				<c:forEach var="t" items="${tasks}"> 
 				    <tr>			    	
 				    	<td><a href="items/?id=${t.id}&title=${t.title}">${t.title}</a></td>
 				    	<td><a title='<fmt:message key="task.alter"/>' href="task_form?id=${t.id}"><span class="glyphicon glyphicon-pencil"></span></a></td>
 				    	<td><a title='<fmt:message key="task.delete"/>' href="task_delete?id=${t.id}" onclick="show_modal(this.href); return false;"><span class="glyphicon glyphicon-remove"></span></a></td>
-				    </tr>
-				</c:forEach>			    
+				    </tr> 
+				</c:forEach>	
+   				<c:if test="${fn:length(tasks) <= 0}">
+					<h3 class="alert alert-warning"><fmt:message key="tasks.there.indexed.tasks" /> </h3>
+				</c:if>	
 			</table>			
 		</div>
 		

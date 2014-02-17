@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 public class User {
 	
 	private int id;
+	@NotNull @Size(min=5, max=50, message="Nome deve conter pelo menos 5 caracters, e no maximo 50")
 	private String name;
 	@NotNull(message="Digite o Email") @Size(min=1, message="Por Favor Digite o Email")
 	private String email;

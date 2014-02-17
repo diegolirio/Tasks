@@ -3,6 +3,7 @@ package com.diegolirio.tasks.controller;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.diegolirio.tasks.dao.TaskDao;
 import com.diegolirio.tasks.dao.TaskItemDao;
 import com.diegolirio.tasks.model.Task;
@@ -32,12 +34,21 @@ public class TaskController {
 	}
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(Locale locale, Model model) {
+	public ModelAndView list(Locale locale, Model model, HttpSession session) {
+		
 		logger.info("Welcome home! The client locale is {}.", locale);
 		ModelAndView mv = new ModelAndView("list_task");
+		
 		// Usuario
-		User usuario = new User();
-		usuario.setId(1);
+		User usuario = null;
+		if (session.getAttribute("user") != null) {
+			usuario = (User)session.getAttribute("user"); 
+		} else {
+			throw new RuntimeException("Erro: usuario não localizado !!!");
+		}
+		
+		System.out.println("LIST========="+usuario);
+		
 		// Pega lista
 		List<Task> tasks = this.dao.getList(usuario);
 		mv.addObject("tasks", tasks);

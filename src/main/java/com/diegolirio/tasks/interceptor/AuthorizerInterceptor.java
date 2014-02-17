@@ -21,7 +21,7 @@ public class AuthorizerInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		
-		if(uri.endsWith("tasks/") || uri.endsWith("tasks") || uri.contains("/static/")) {
+		if(uri.endsWith("tasks/") || uri.endsWith("tasks") || uri.contains("/static/") || uri.endsWith("/new_account/")) {
 			return true;
 		}
 		

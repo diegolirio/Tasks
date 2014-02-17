@@ -28,7 +28,7 @@
 		<form action="" class="well form-horizontal" id="id_form_task" method="post" accept-charset="utf-8">
 			<div style="display:none;">
 				<input type="hidden" name="id" value="${task.id}"/>
-				<input type="hidden" name="usuario.id" value="1"/>
+				<input type="hidden" name="usuario.id" value="${user.id}"/>
 			</div>	
 			<div class="form-group">
 				<label for="id_title" class="col col-md-3 control-label">Title</label>

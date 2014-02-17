@@ -16,7 +16,7 @@
 	
 	<h1 class="text-primary">Login</h1>
 	
-	<div class="pull-right"><a href="#">Criar Nova Conta</a></div>
+	<div class="pull-right"><a href="/tasks/new_account/">Criar Nova Conta</a></div>
 	
 	<br/>
 	
@@ -35,7 +35,7 @@
     <div class="col-sm-5">
 		<div class="input-group">
 		  <span class="input-group-addon">@</span>
-		  <input type="email" class="form-control" placeholder="Username" name="email">
+		  <input type="email" class="form-control" placeholder="Username" name="email" value="${user.email}">
 		</div>
 		<form:errors path="user.email" cssClass="text-danger"/>
     </div>
