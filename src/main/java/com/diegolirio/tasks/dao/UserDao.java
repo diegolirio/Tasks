@@ -10,18 +10,19 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.diegolirio.tasks.db.UserDB;
 import com.diegolirio.tasks.jdbc.Command;
 import com.diegolirio.tasks.model.User;
 
 @Repository
-public class UserDao {
+public class UserDao implements UserDB {
 	
 	private Connection conn;
 	
 	@Autowired
 	public UserDao(DataSource dataSource) {
 		try {
-			this.conn = dataSource.getConnection();
+			this.conn = dataSource.getConnection(); 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
@@ -53,6 +54,19 @@ public class UserDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public Boolean ExistUserEmail(String email) {
+		String sql = "Select Count(*) from task_usuario where task_usuario_email = '" + email + "'";
+		ResultSet rs = Command.executeQuery(conn, sql);
+		Boolean exist = true;
+		try {
+			exist = rs.next(); 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return exist;
 	}
 
 }

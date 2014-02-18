@@ -15,6 +15,10 @@
 		<h1 class="text-info">Nova Conta</h1>
 		
 		<form action="" class="well form-horizontal" id="id_form_login" method="post" accept-charset="utf-8">
+		
+			<c:if test="${message != null}">
+				<div class="alert alert-danger">${message}</div>
+			</c:if>
 
 		  <div class="form-group">
 		    <label for="inputName" class="col-sm-2 control-label">Name</label>
@@ -55,7 +59,7 @@
 				  <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirmPassword">
 				</div>      
 				<!-- <form:errors path="user.password" cssClass="text-danger"/> -->
-				<span class="text-danger">${message}</span>
+				<span class="text-danger">${confirmPasswordMessage}</span>
 		    </div>		    
 		  </div>
 		  

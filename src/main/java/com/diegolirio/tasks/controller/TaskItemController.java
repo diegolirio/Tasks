@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.diegolirio.tasks.dao.TaskItemDao;
+import com.diegolirio.tasks.db.TaskItemDB;
 import com.diegolirio.tasks.model.TaskItem;
 
 //@Controller
@@ -17,7 +18,7 @@ public class TaskItemController {
 
 	private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
 	
-	private TaskItemDao dao;
+	private TaskItemDB dao;
 	
 	//@Autowired
 	public TaskItemController(TaskItemDao dao) {

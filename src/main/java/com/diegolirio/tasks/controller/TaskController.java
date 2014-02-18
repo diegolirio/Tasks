@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.diegolirio.tasks.dao.TaskDao;
 import com.diegolirio.tasks.dao.TaskItemDao;
+import com.diegolirio.tasks.db.TaskDB;
 import com.diegolirio.tasks.model.Task;
 import com.diegolirio.tasks.model.TaskItem;
 import com.diegolirio.tasks.model.User;
@@ -26,7 +27,7 @@ import com.diegolirio.tasks.model.User;
 public class TaskController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
-	private TaskDao dao;
+	private TaskDB dao;
 	
 	@Autowired
 	public TaskController(TaskDao dao) {

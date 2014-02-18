@@ -11,13 +11,14 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.diegolirio.tasks.db.TaskDB;
 import com.diegolirio.tasks.jdbc.Command;
 import com.diegolirio.tasks.model.Task;
 import com.diegolirio.tasks.model.TaskItem;
 import com.diegolirio.tasks.model.User;
 
 @Repository
-public class TaskDao {
+public class TaskDao implements TaskDB {
 	
 	private Connection conn;
 	
@@ -30,9 +31,9 @@ public class TaskDao {
 		}
 	}
 	
-	public List<Task> getList(User usuario) {
+	public List<Task> getList(User user) {
 		List<Task> list = new ArrayList<>();
-		String sql = "Select * from task_task where task_usuario_id = '" + usuario.getId() + "'";
+		String sql = "Select * from task_task where task_usuario_id = '" + user.getId() + "'";
 		System.out.println(sql);
 		try {
 			ResultSet rs = Command.executeQuery(conn, sql);		

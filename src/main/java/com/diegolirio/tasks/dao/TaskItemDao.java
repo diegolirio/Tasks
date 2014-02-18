@@ -9,12 +9,13 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.diegolirio.tasks.db.TaskItemDB;
 import com.diegolirio.tasks.jdbc.Command;
 import com.diegolirio.tasks.jdbc.FactoryConnection;
 import com.diegolirio.tasks.model.TaskItem;
 
 @Repository
-public class TaskItemDao {
+public class TaskItemDao implements TaskItemDB {
 	
 	public TaskItemDao() {
 		

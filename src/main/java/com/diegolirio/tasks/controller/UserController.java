@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.diegolirio.tasks.dao.UserDao;
+import com.diegolirio.tasks.db.UserDB;
 import com.diegolirio.tasks.model.User;
 
 @Controller
 public class UserController {
 	
-	private UserDao dao;
+	private UserDB dao;
 	
 	@Autowired
 	public UserController(UserDao dao) {
@@ -80,12 +81,17 @@ public class UserController {
 			mv.setViewName("new_account");
 		} else {
 			if (user.getPassword().equals(confirmPassword)) {
-				// insert... 
-				this.dao.insert(user);
-				mv.setViewName("redirect:/list");
+				if(this.dao.ExistUserEmail(user.getEmail()) == false) {
+					this.dao.insert(user);
+					mv.setViewName("redirect:/list");
+				}
+				else {
+					mv.setViewName("new_account");
+					mv.addObject("message", "Email já cadastrado em nosso sistema.");
+				}
 			} else {
 				mv.setViewName("new_account");
-				mv.addObject("message", "Senha não confere...");
+				mv.addObject("confirmPasswordMessage", "Senha não confere...");
 			}
 		}		 
 		return mv;
