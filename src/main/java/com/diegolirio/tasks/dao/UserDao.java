@@ -62,7 +62,8 @@ public class UserDao implements UserDB {
 		ResultSet rs = Command.executeQuery(conn, sql);
 		Boolean exist = true;
 		try {
-			exist = rs.next(); 
+			if(rs.next())
+				exist = rs.getInt(1) > 0; 
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
