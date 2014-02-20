@@ -28,6 +28,10 @@ public class UserDao implements UserDB {
 		}
 	}
 	
+	public UserDao(Connection conn) {
+		this.conn = conn;
+	}
+	
 	public Boolean login(User user) {
 		String sql = "Select * from task_usuario u where u.task_usuario_email = '" + 
 						user.getEmail() + "' and task_usuario_senha = '" + user.getPassword() +"'";
@@ -70,4 +74,22 @@ public class UserDao implements UserDB {
 		return exist;
 	}
 
+	public User getUser(int id) {
+		User user = null;
+		String sql = "Select * from task_usuario u where u.task_usuario_id = " + id;
+		ResultSet rs = Command.executeQuery(conn, sql);
+		try {
+			if(rs.next()) {
+				user = new User();
+				user.setId(rs.getInt("task_usuario_id"));
+				user.setName(rs.getString("task_usuario_nome"));
+				user.setPassword("");
+				user.setDateRegistration(Calendar.getInstance());
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Erro ao Pegar Usuario: UserDao.getUser(int id): " + e.getMessage());
+		}
+		return user;		
+	}
+	
 }

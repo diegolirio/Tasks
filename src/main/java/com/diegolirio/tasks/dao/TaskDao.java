@@ -31,6 +31,10 @@ public class TaskDao implements TaskDB {
 		}
 	}
 	
+	public TaskDao(Connection conn) {
+		this.conn = conn;
+	}	
+	
 	public List<Task> getList(User user) {
 		List<Task> list = new ArrayList<>();
 		String sql = "Select * from task_task where task_usuario_id = '" + user.getId() + "'";

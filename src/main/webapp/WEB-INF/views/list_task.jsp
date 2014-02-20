@@ -14,6 +14,10 @@
 
 	<div class="container">
 			
+		<c:if test="${param.message != null}">
+			<div class="alert alert-success">${param.message}</div>
+		</c:if>	
+			
 		<div class="panel panel-primary">
 			<div class="panel-heading"><fmt:message key="task.list"/><a title="Alterar" href="#"><span class="glyphicon glyphicon-pencil"></span></a></div>
 			<div class="panel-body">
