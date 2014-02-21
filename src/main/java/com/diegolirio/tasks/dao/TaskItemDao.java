@@ -68,14 +68,14 @@ public class TaskItemDao implements TaskItemDB {
 	
 	public Task getTask(TaskItem item) {
 		Task task = null;
-		String sql = "Select task_task_id, " +
-					 "		 task_task_title, " +
-					 "		 task_task_completed, " +
-					 "		 task_usuario_id " +	
-					 "	from task_taskitem i, " +
-					 "       task_task t  " +
-					 "   where i.task_task_id = t.task_task_id " +
-					 "     and i.task_taskitem_id = " + item.getId();
+		String sql = "  select t.task_task_id, "+
+							 " t.task_task_titulo, "+
+							 " t.task_task_concluida,"+
+							 " t.task_usuario_id "+
+						  " from task_task t, "+
+						  "      task_taskitem i "+
+						  " where t.task_task_id = i.task_task_id "+
+						  "   and i.task_taskitem_id = 9" + item.getId();
 		ResultSet rs;
 		try {
 			rs = Command.executeQuery(conn, sql);

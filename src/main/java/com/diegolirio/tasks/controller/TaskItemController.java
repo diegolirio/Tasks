@@ -42,23 +42,25 @@ public class TaskItemController {
 	}	
 	
 	@RequestMapping(value="items/cad_item", method=RequestMethod.POST)
-	public String itemFormSave(@Valid TaskItem item, BindingResult result) {
+	public ModelAndView itemFormSave(@Valid TaskItem item, BindingResult result) {
+		ModelAndView mv = new ModelAndView();
 		if(result.hasFieldErrors("description")) {
 			logger.info(result.getFieldError("description").getDefaultMessage());
-			return "add_item";
+			mv.setViewName("add_item");
+			mv.addObject("item", item);
+			return mv;
 		}		
-		String page = "";
 		try { 
 			System.out.println(item);
 			if (item.getId() == 0)
 				this.dao.insert(item);
 			else
 				this.dao.update(item);			
-			page = "redirect:/items/?id="+item.getTask().getId();  
+			mv.setViewName("redirect:/items/?id="+item.getTask().getId());  
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		return page;		
+		return mv;		
 	}		
 	
 	

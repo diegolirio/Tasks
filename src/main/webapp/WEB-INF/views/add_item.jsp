@@ -31,6 +31,7 @@
 			<div style="display:none;">
 				<input type="hidden" name="id" value="${item.id}">
 				<input type="hidden" name="task.id" value="${item.task.id}"/>
+				<input type="hidden" name="task.title" value="${item.task.title}"/>
 			</div>	
 			<div class="form-group">
 				<label for="id_description" class="col col-md-3 control-label">Description</label>
