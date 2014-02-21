@@ -2,11 +2,19 @@ package com.diegolirio.tasks.model;
 
 import java.util.Calendar;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Entity
 public class User {
 	
+	@Id
+	@GeneratedValue
 	private int id;
 	@NotNull @Size(min=5, max=50, message="Nome deve conter pelo menos 5 caracters, e no maximo 50")
 	private String name;
@@ -14,6 +22,7 @@ public class User {
 	private String email;
 	@NotNull @Size(min=6, max=12, message="Senha deve conter de 6 a 12 caracters")
 	private String password;
+	@Temporal(TemporalType.DATE)
 	private Calendar dateRegistration;
 	
 	public int getId() {

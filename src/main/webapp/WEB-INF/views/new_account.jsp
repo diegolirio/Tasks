@@ -61,7 +61,7 @@
 				<!-- <form:errors path="user.password" cssClass="text-danger"/> -->
 				<span class="text-danger">${confirmPasswordMessage}</span>
 		    </div>		    
-		  </div>
+		  </div>	  
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-2 col-sm-10">
