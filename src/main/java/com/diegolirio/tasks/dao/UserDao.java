@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -90,6 +91,18 @@ public class UserDao implements UserDB {
 			throw new RuntimeException("Erro ao Pegar Usuario: UserDao.getUser(int id): " + e.getMessage());
 		}
 		return user;		
+	}
+
+	@Override
+	public void update(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

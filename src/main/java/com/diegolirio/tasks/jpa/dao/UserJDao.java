@@ -7,9 +7,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import com.diegolirio.tasks.db.UserDB;
 import com.diegolirio.tasks.model.User;
 
-public class UserJDao {
+public class UserJDao implements UserDB {
 	
 	public Boolean login(User user) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("tasks");
@@ -65,6 +66,12 @@ public class UserJDao {
 	public List<User> getAllUsers() {
 		List<User> list = null;
 		return list;
+	}
+
+	@Override
+	public Boolean ExistUserEmail(String email) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	 
 
